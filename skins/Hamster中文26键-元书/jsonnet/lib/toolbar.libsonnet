@@ -109,7 +109,7 @@ local getToolBar(theme) = {
   toolbarSimp2tranButton: {
     backgroundStyle: 'toolbarButtonBackgroundStyle',
     foregroundStyle: 'toolbarYunmuText',
-    action: { rimeOption: 'show_flypy_yunmu' },
+    action: { shortcut: '#RimeSwitcher' },
   },
   toolbarYunmuText: utils.makeTextStyle({ text: '双拼', normalColor: color[theme]['toolbar按键颜色'], highlightColor: color[theme]['toolbar按键颜色'], fontSize: 13 }),
   toolbarCloseButton: {
