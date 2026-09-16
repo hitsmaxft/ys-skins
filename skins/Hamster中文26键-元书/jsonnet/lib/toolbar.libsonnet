@@ -89,10 +89,10 @@ local getToolBar(theme) = {
   toolbarEmbeddedButton: {
     backgroundStyle: 'toolbarButtonBackgroundStyle',
     foregroundStyle: 'toolbarEmbeddedButtonForegroundStyle',
-    action: { shortcut: '#toggleEmbeddedInputMode' },
+    action: { shortcut: '#toggleCommandView' },
   },
   toolbarEmbeddedButtonForegroundStyle: utils.makeSystemImageStyle({
-    systemImageName: 'character.cursor.ibeam', normalColor: color[theme]['toolbar按键颜色'],
+    systemImageName: 'command', normalColor: color[theme]['toolbar按键颜色'],
     highlightColor: color[theme]['toolbar按键颜色'], fontSize: 19,
   }),
 
