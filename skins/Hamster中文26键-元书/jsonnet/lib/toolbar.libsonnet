@@ -111,7 +111,7 @@ local getToolBar(theme) = {
     foregroundStyle: 'toolbarYunmuText',
     action: { rimeOption: 'show_flypy_yunmu' },
   },
-  toolbarYunmuText: utils.makeTextStyle({ text: '韵母', normalColor: color[theme]['toolbar按键颜色'], highlightColor: color[theme]['toolbar按键颜色'], fontSize: 13 }),
+  toolbarYunmuText: utils.makeTextStyle({ text: '双拼', normalColor: color[theme]['toolbar按键颜色'], highlightColor: color[theme]['toolbar按键颜色'], fontSize: 13 }),
   toolbarCloseButton: {
     backgroundStyle: 'toolbarButtonBackgroundStyle',
     foregroundStyle: 'toolbarCloseButtonForegroundStyle',

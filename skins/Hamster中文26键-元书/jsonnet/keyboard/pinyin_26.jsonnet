@@ -809,5 +809,10 @@ local keyboard(theme, orientation) =
         buttonStyleType: 'text', text: flypyYunmu[k], fontSize: 8,
         center: { x: 0.5, y: 0.78 },
         normalColor: color[theme]['划动字符颜色'], highlightColor: color[theme]['划动字符颜色'],
-      } for k in std.objectFields(flypyYunmu) },
+      } for k in std.objectFields(flypyYunmu) } +
+    {
+      lButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'uang', fontSize:6, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
+      uButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'sh', fontSize:8, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
+      iButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'ch', fontSize:8, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
+    },
 }
