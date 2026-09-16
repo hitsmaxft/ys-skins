@@ -111,7 +111,7 @@ local getToolBar(theme) = {
     foregroundStyle: 'toolbarYunmuText',
     action: { shortcut: '#RimeSwitcher' },
   },
-  toolbarYunmuText: utils.makeTextStyle({ text: '双拼', normalColor: color[theme]['toolbar按键颜色'], highlightColor: color[theme]['toolbar按键颜色'], fontSize: 13 }),
+  toolbarYunmuText: utils.makeSystemImageStyle({ systemImageName: 'switch.2', normalColor: color[theme]['toolbar按键颜色'], highlightColor: color[theme]['toolbar按键颜色'], fontSize: 19 }),
   toolbarCloseButton: {
     backgroundStyle: 'toolbarButtonBackgroundStyle',
     foregroundStyle: 'toolbarCloseButtonForegroundStyle',
