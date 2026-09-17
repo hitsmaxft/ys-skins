@@ -34,7 +34,6 @@ local getToolBar(theme) = {
       { Cell: 'toolbarFlexibleSpacer' },
       { Cell: 'toolbarPasteboardButton' },
       { Cell: 'toolbarSymbolButton' },
-      { Cell: 'toolbarEmbeddedButton' },
       { Cell: 'toolbarScriptButton' },
       { Cell: 'toolbarSimp2tranButton' },
       { Cell: 'toolbarCloseButton' },
@@ -99,10 +98,10 @@ local getToolBar(theme) = {
   toolbarScriptButton: {
     backgroundStyle: 'toolbarButtonBackgroundStyle',
     foregroundStyle: 'toolbarScriptButtonForegroundStyle',
-    action: { shortcut: '#toggleScriptView' },
+    action: { shortcut: '#toggleCommandView' },
   },
   toolbarScriptButtonForegroundStyle: utils.makeSystemImageStyle({
-    systemImageName: 'function', normalColor: color[theme]['toolbar按键颜色'],
+    systemImageName: 'terminal', normalColor: color[theme]['toolbar按键颜色'],
     highlightColor: color[theme]['toolbar按键颜色'], fontSize: 19,
   }),
 
