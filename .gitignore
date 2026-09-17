@@ -1,0 +1,7 @@
+# Jsonnet generated skin outputs; generate locally or in 元书 via main.jsonnet
+skins/Hamster中文26键-元书/config.yaml
+skins/Hamster中文26键-元书/light/*.yaml
+skins/Hamster中文26键-元书/dark/*.yaml
+# 元书 runtime cache
+skins/Hamster中文26键-元书/light/.*.keyboard
+skins/Hamster中文26键-元书/dark/.*.keyboard
