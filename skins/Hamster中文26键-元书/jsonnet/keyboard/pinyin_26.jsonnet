@@ -40,7 +40,7 @@ local createButton(params={}) =
       if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
       if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
     ]),
-    [if isLetter then 'notification']: [params.key + 'FlypyYunmuNotification'],
+    [if isLetter then 'notification']: [params.key + 'FlypyYunmuNotification', params.key + 'FlypySchemaNotification'],
     hintStyle: params.key + 'ButtonHintStyle',
     action: std.get(params, 'action', { character: params.key }),
     [if isLetter then 'uppercasedStateAction']: {
@@ -804,6 +804,16 @@ local keyboard(theme, orientation) =
         rimeOptionName: 'show_flypy_yunmu', rimeOptionValue: true,
         backgroundStyle: 'alphabeticBackgroundStyle',
         foregroundStyle: [k + 'ButtonForegroundStyle', k + 'ButtonUpForegroundStyle', k + 'ButtonFlypyYunmuStyle'],
+      } for k in std.objectFields(flypyYunmu) } +
+    { [k + 'FlypySchemaNotification']: {
+        notificationType: 'rime', rimeNotificationType: 'schemaChanged',
+        rimeSchemaID: 'double_pinyin_flypy',
+        backgroundStyle: 'alphabeticBackgroundStyle',
+        foregroundStyle: [
+          k + 'ButtonForegroundStyle',
+          k + 'ButtonUpForegroundStyle',
+          { styleName: k + 'ButtonFlypyYunmuStyle', conditionKey: 'rime$show_flypy_yunmu', conditionValue: true },
+        ],
       } for k in std.objectFields(flypyYunmu) } +
     { [k + 'ButtonFlypyYunmuStyle']: {
         buttonStyleType: 'text', text: flypyYunmu[k], fontSize: 8,
