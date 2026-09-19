@@ -803,11 +803,7 @@ local keyboard(theme, orientation) =
         notificationType: 'rime', rimeNotificationType: 'optionChanged',
         rimeOptionName: 'show_flypy_yunmu', rimeOptionValue: true,
         backgroundStyle: 'alphabeticBackgroundStyle',
-        foregroundStyle: [
-          k + 'ButtonForegroundStyle',
-          k + 'ButtonUpForegroundStyle',
-          { styleName: k + 'ButtonFlypyYunmuStyle', conditionKey: 'rime$show_flypy_yunmu', conditionValue: true },
-        ],
+        foregroundStyle: [k + 'ButtonForegroundStyle', k + 'ButtonUpForegroundStyle', k + 'ButtonFlypyYunmuStyle'],
       } for k in std.objectFields(flypyYunmu) } +
     { [k + 'ButtonFlypyYunmuStyle']: {
         buttonStyleType: 'text', text: flypyYunmu[k], fontSize: 8,
