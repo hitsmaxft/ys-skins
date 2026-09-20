@@ -451,29 +451,22 @@ local keyboarLayout(theme="light") = {
         percentage: 0.1,
       },
     },
-    'a键bounds': {
-      width: 1,
-      alignment: 'left',
-    },
     'l键size': {
       width: {
         percentage: 0.1,
       },
     },
-    'l键bounds': {
-      width: 1,
-      alignment: 'left',
-    },
     '第二排右侧空位size': { width: { percentage: 0.1 } },
     'shift键size': {
       width: {
-        percentage: 0.13,
+        percentage: 0.08,
       },
     },
-    '第三排间隔size': { width: { percentage: 0.02 } },
+    '第三排左间隔size': { width: { percentage: 0.02 } },
+    '第三排右间隔size': { width: { percentage: 0.0 } },
     'backspace键size': {
       width: {
-        percentage: 0.13,
+        percentage: 0.2,
       },
     },
     'symbol键size': {

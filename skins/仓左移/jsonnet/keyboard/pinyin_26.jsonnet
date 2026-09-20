@@ -463,8 +463,8 @@ local keyboard(theme, orientation) =
       swipeUpForegroundStyle: 'mButtonSwipeUpHintForegroundStyle',
     },
     homeRowRightSpacer: { size: std.get(ButtonSize, '第二排右侧空位size', { width: 0 }) },
-    thirdRowLeftSpacer: { size: std.get(ButtonSize, '第三排间隔size', { width: 0 }) },
-    thirdRowRightSpacer: { size: std.get(ButtonSize, '第三排间隔size', { width: 0 }) },
+    thirdRowLeftSpacer: { size: std.get(ButtonSize, '第三排左间隔size', { width: 0 }) },
+    thirdRowRightSpacer: { size: std.get(ButtonSize, '第三排右间隔size', { width: 0 }) },
 
     backspaceButton: createButton(
       params={
