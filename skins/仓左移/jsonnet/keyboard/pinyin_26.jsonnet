@@ -605,24 +605,40 @@ local keyboard(theme, orientation) =
       }
     ),
 
+    // 中英状态：条件样式负责首次渲染，成对 optionChanged 通知负责后续刷新。
     asciiModeButton: createButton(
       params={
         key: 'asciiMode',
         size: ButtonSize['asciiMode键size'],
-        action: { shortcutCommand: '#中英切换' },
+        action: { shortcut: '#中英切换' },
+        foregroundStyle: [
+          { styleName: 'asciiModeButtonEnglishStyle', conditionKey: 'rime$ascii_mode', conditionValue: true },
+          { styleName: 'asciiModeButtonChineseStyle', conditionKey: 'rime$ascii_mode', conditionValue: false },
+        ],
         isLetter: false,
       }
-    ),
+    ) + {
+      notification: ['asciiModeButtonChineseNotification', 'asciiModeButtonEnglishNotification'],
+    },
 
-    asciiModeButtonForegroundStyle: utils.makeTextStyle(
-      params={
-        text: '中/英',
-        normalColor: color[theme]['按键前景颜色'],
-        highlightColor: color[theme]['按键前景颜色'],
-        fontSize: fontSize['按键前景文字大小'] - 4,
-        center: center['功能键前景文字偏移'],
-      }
-    ),
+    asciiModeButtonChineseStyle: utils.makeTextStyle({
+      text: '中', normalColor: color[theme]['按键前景颜色'], highlightColor: color[theme]['按键前景颜色'],
+      fontSize: fontSize['按键前景文字大小'] - 2, center: center['功能键前景文字偏移'],
+    }),
+    asciiModeButtonEnglishStyle: utils.makeTextStyle({
+      text: '英', normalColor: color[theme]['按键前景颜色'], highlightColor: color[theme]['按键前景颜色'],
+      fontSize: fontSize['按键前景文字大小'] - 2, center: center['功能键前景文字偏移'],
+    }),
+    asciiModeButtonChineseNotification: {
+      notificationType: 'rime', rimeNotificationType: 'optionChanged',
+      rimeOptionName: 'ascii_mode', rimeOptionValue: false,
+      backgroundStyle: 'systemButtonBackgroundStyle', foregroundStyle: 'asciiModeButtonChineseStyle',
+    },
+    asciiModeButtonEnglishNotification: {
+      notificationType: 'rime', rimeNotificationType: 'optionChanged',
+      rimeOptionName: 'ascii_mode', rimeOptionValue: true,
+      backgroundStyle: 'systemButtonBackgroundStyle', foregroundStyle: 'asciiModeButtonEnglishStyle',
+    },
 
     enterButton: createButton(
       params={
