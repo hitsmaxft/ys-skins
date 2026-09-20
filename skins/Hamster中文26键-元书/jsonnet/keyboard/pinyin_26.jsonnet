@@ -26,12 +26,27 @@ local createButton(params={}) =
     backgroundStyle: if isLetter then 'alphabeticBackgroundStyle' else std.get(params, 'backgroundStyle', 'systemButtonBackgroundStyle'),
     foregroundStyle:
       if isLetter then
-        std.prune([
-          params.key + 'ButtonForegroundStyle',
-          if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-          if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
-          { styleName: params.key + 'ButtonFlypyYunmuStyle', conditionKey: 'rime$show_flypy_yunmu', conditionValue: true },
-        ])
+        [
+          {
+            styleName: std.prune([
+              params.key + 'ButtonForegroundStyle',
+              if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
+              if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
+              params.key + 'ButtonFlypyYunmuStyle',
+            ]),
+            conditionKey: 'rime$show_flypy_yunmu',
+            conditionValue: true,
+          },
+          {
+            styleName: std.prune([
+              params.key + 'ButtonForegroundStyle',
+              if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
+              if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
+            ]),
+            conditionKey: 'rime$show_flypy_yunmu',
+            conditionValue: false,
+          },
+        ]
       else
         std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
 
