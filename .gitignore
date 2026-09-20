@@ -5,3 +5,10 @@ skins/Hamster中文26键-元书/dark/*.yaml
 # 元书 runtime cache
 skins/Hamster中文26键-元书/light/.*.keyboard
 skins/Hamster中文26键-元书/dark/.*.keyboard
+
+# 仓左移 generated outputs
+skins/仓左移/config.yaml
+skins/仓左移/light/*.yaml
+skins/仓左移/dark/*.yaml
+skins/仓左移/light/.*.keyboard
+skins/仓左移/dark/.*.keyboard
