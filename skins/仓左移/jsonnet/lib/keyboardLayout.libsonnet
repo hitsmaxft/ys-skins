@@ -30,7 +30,7 @@ local keyboarLayout(theme="light") = {
             { Cell: 'jButton' },
             { Cell: 'kButton' },
             { Cell: 'lButton' },
-            { Cell: 'homeRowRightSpacer' },
+            { Cell: 'asciiModeButton' },
           ],
         },
       },
@@ -58,7 +58,6 @@ local keyboarLayout(theme="light") = {
             { Cell: 'symbolButton' },
             { Cell: 'spaceButton' },
             { Cell: 'commaButton' },
-            { Cell: 'asciiModeButton' },
             { Cell: 'enterButton' },
           ],
         },
@@ -246,7 +245,7 @@ local keyboarLayout(theme="light") = {
             { Cell: 'jButton' },
             { Cell: 'kButton' },
             { Cell: 'lButton' },
-            { Cell: 'homeRowRightSpacer' },
+            { Cell: 'asciiModeButton' },
           ],
         },
       },
@@ -459,10 +458,10 @@ local keyboarLayout(theme="light") = {
     '第二排右侧空位size': { width: { percentage: 0.1 } },
     'shift键size': {
       width: {
-        percentage: 0.08,
+        percentage: 0.1,
       },
     },
-    '第三排左间隔size': { width: { percentage: 0.02 } },
+    '第三排左间隔size': { width: { percentage: 0.0 } },
     '第三排右间隔size': { width: { percentage: 0.0 } },
     'backspace键size': {
       width: {
@@ -491,12 +490,12 @@ local keyboarLayout(theme="light") = {
     },
     'asciiMode键size': {
       width: {
-        percentage: 0.123,
+        percentage: 0.1,
       },
     },
     'enter键size': {
       width: {
-        percentage: 0.19,
+        percentage: 0.313,
       },
     },
   },
