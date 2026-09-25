@@ -7,7 +7,7 @@ local keyboardLayout = import '../lib/keyboardLayout.libsonnet';
 local others = import '../lib/others.libsonnet';
 local swipeData = import '../lib/swipeData.libsonnet';
 local toolbar = import '../lib/toolbar.libsonnet';
-local flypyYunmu = import '../lib/flypyYunmu.libsonnet';
+local flypyKeycode = import '../lib/flypyYunmu.libsonnet';
 local utils = import '../lib/utils.libsonnet';
 
 local hintSymbolsStyles = import '../lib/hintSymbolsStyles.libsonnet';
@@ -20,54 +20,29 @@ local hintSymbolsData = std.get(_hintSymbolsData, "pinyin", {});
 
 local createButton(params={}) =
   local isLetter = std.get(params, 'isLetter', true);
+  local baseStyles = std.prune([
+    params.key + 'ButtonForegroundStyle',
+    if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
+    if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
+  ]);
+  local initialStyles = baseStyles + (if std.objectHas(flypyKeycode.initial, params.key) then [params.key + 'ButtonFlypyInitialStyle'] else []);
+  local finalStyles = baseStyles + (if std.objectHas(flypyKeycode.final, params.key) then [params.key + 'ButtonFlypyFinalStyle'] else []);
   std.prune({
-    size: std.get(params, 'size'),
-    bounds: std.get(params, 'bounds'),
+    size: std.get(params, 'size'), bounds: std.get(params, 'bounds'),
     backgroundStyle: if isLetter then 'alphabeticBackgroundStyle' else std.get(params, 'backgroundStyle', 'systemButtonBackgroundStyle'),
-    foregroundStyle:
-      if isLetter then
-        [
-          {
-            styleName: std.prune([
-              params.key + 'ButtonForegroundStyle',
-              if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-              if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
-              params.key + 'ButtonFlypyYunmuStyle',
-            ]),
-            conditionKey: 'rime$show_flypy_yunmu',
-            conditionValue: true,
-          },
-          {
-            styleName: std.prune([
-              params.key + 'ButtonForegroundStyle',
-              if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-              if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
-            ]),
-            conditionKey: 'rime$show_flypy_yunmu',
-            conditionValue: false,
-          },
-        ]
-      else
-        std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
-
-    [if isLetter then 'uppercasedStateForegroundStyle']: std.prune([
-      params.key + 'ButtonUppercasedStateForegroundStyle',
-      if std.objectHas(swipe_up, params.key) then params.key + 'ButtonUpForegroundStyle' else null,
-      if std.objectHas(swipe_down, params.key) then params.key + 'ButtonDownForegroundStyle' else null,
-    ]),
-    [if isLetter then 'notification']: [params.key + 'FlypyYunmuNotification'],
-    hintStyle: params.key + 'ButtonHintStyle',
-    action: std.get(params, 'action', { character: params.key }),
-    [if isLetter then 'uppercasedStateAction']: {
-      character: std.asciiUpper(params.key),
-    },
+    foregroundStyle: if isLetter then [
+      { styleName: baseStyles, conditionKey: 'rime$flypy_keycode_hidden', conditionValue: true },
+      { styleName: initialStyles, conditionKey: 'rime$flypy_keycode_initial', conditionValue: true },
+      { styleName: finalStyles, conditionKey: 'rime$flypy_keycode_final', conditionValue: true },
+    ] else std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
+    [if isLetter then 'uppercasedStateForegroundStyle']: baseStyles,
+    [if isLetter then 'notification']: [params.key + 'FlypyHiddenNotification', params.key + 'FlypyInitialNotification', params.key + 'FlypyFinalNotification'],
+    hintStyle: params.key + 'ButtonHintStyle', action: std.get(params, 'action', { character: params.key }),
+    [if isLetter then 'uppercasedStateAction']: { character: std.asciiUpper(params.key) },
     repeatAction: std.get(params, 'repeatAction'),
     [if std.objectHas(swipe_up, params.key) then 'swipeUpAction']: swipe_up[params.key].action,
     [if std.objectHas(swipe_down, params.key) then 'swipeDownAction']: swipe_down[params.key].action,
     [if std.objectHas(hintSymbolsData, params.key) then 'hintSymbolsStyle']: params.key + 'ButtonHintSymbolsStyle',
-
-    // 动画
-    // 禁用逐键动画，降低触摸延迟。
     animation: null,
   });
 
@@ -830,20 +805,18 @@ local keyboard(theme, orientation) =
     toolbar.getToolBar(theme) +  // 工具栏
     utils.genPinyinStyles(theme) +  // 批量生成前景
     utils.genHintStyles(theme) +
-    { [k + 'FlypyYunmuNotification']: {
-        notificationType: 'rime', rimeNotificationType: 'optionChanged',
-        rimeOptionName: 'show_flypy_yunmu', rimeOptionValue: true,
-        backgroundStyle: 'alphabeticBackgroundStyle',
-        foregroundStyle: [k + 'ButtonForegroundStyle', k + 'ButtonUpForegroundStyle', k + 'ButtonFlypyYunmuStyle'],
-      } for k in std.objectFields(flypyYunmu) } +
-    { [k + 'ButtonFlypyYunmuStyle']: {
-        buttonStyleType: 'text', text: flypyYunmu[k], fontSize: 8,
-        center: { x: 0.5, y: 0.78 },
-        normalColor: color[theme]['划动字符颜色'], highlightColor: color[theme]['划动字符颜色'],
-      } for k in std.objectFields(flypyYunmu) } +
-    {
-      lButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'uang', fontSize:6, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
-      uButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'sh', fontSize:8, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
-      iButtonFlypyYunmuStyle: { buttonStyleType:'text', text:'ch', fontSize:8, center:{x:0.5,y:0.78}, normalColor:color[theme]['划动字符颜色'], highlightColor:color[theme]['划动字符颜色'] },
-    },
+    { [k + 'FlypyHiddenNotification']: {
+        notificationType:'rime', rimeNotificationType:'optionChanged', rimeOptionName:'flypy_keycode_hidden', rimeOptionValue:true,
+        backgroundStyle:'alphabeticBackgroundStyle', foregroundStyle: std.prune([k+'ButtonForegroundStyle', if std.objectHas(swipe_up,k) then k+'ButtonUpForegroundStyle' else null, if std.objectHas(swipe_down,k) then k+'ButtonDownForegroundStyle' else null]),
+      } for k in std.stringChars('qwertyuiopasdfghjklzxcvbnm') } +
+    { [k + 'FlypyInitialNotification']: {
+        notificationType:'rime', rimeNotificationType:'optionChanged', rimeOptionName:'flypy_keycode_initial', rimeOptionValue:true,
+        backgroundStyle:'alphabeticBackgroundStyle', foregroundStyle: std.prune([k+'ButtonForegroundStyle', if std.objectHas(swipe_up,k) then k+'ButtonUpForegroundStyle' else null, if std.objectHas(flypyKeycode.initial,k) then k+'ButtonFlypyInitialStyle' else null]),
+      } for k in std.stringChars('qwertyuiopasdfghjklzxcvbnm') } +
+    { [k + 'FlypyFinalNotification']: {
+        notificationType:'rime', rimeNotificationType:'optionChanged', rimeOptionName:'flypy_keycode_final', rimeOptionValue:true,
+        backgroundStyle:'alphabeticBackgroundStyle', foregroundStyle: std.prune([k+'ButtonForegroundStyle', if std.objectHas(swipe_up,k) then k+'ButtonUpForegroundStyle' else null, if std.objectHas(flypyKeycode.final,k) then k+'ButtonFlypyFinalStyle' else null]),
+      } for k in std.stringChars('qwertyuiopasdfghjklzxcvbnm') } +
+    { [k+'ButtonFlypyInitialStyle']: {buttonStyleType:'text',text:flypyKeycode.initial[k],fontSize:8,center:{x:0.5,y:0.78},normalColor:color[theme]['划动字符颜色'],highlightColor:color[theme]['划动字符颜色']} for k in std.objectFields(flypyKeycode.initial) } +
+    { [k+'ButtonFlypyFinalStyle']: {buttonStyleType:'text',text:flypyKeycode.final[k],fontSize:if k=='l' then 6 else 8,center:{x:0.5,y:0.78},normalColor:color[theme]['划动字符颜色'],highlightColor:color[theme]['划动字符颜色']} for k in std.objectFields(flypyKeycode.final) },
 }
