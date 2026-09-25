@@ -30,11 +30,8 @@ local createButton(params={}) =
   std.prune({
     size: std.get(params, 'size'), bounds: std.get(params, 'bounds'),
     backgroundStyle: if isLetter then 'alphabeticBackgroundStyle' else std.get(params, 'backgroundStyle', 'systemButtonBackgroundStyle'),
-    foregroundStyle: if isLetter then [
-      { styleName: baseStyles, conditionKey: 'rime$flypy_keycode_hidden', conditionValue: true },
-      { styleName: initialStyles, conditionKey: 'rime$flypy_keycode_initial', conditionValue: true },
-      { styleName: finalStyles, conditionKey: 'rime$flypy_keycode_final', conditionValue: true },
-    ] else std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
+    // 基础前景永远存在；Lua 派生状态只通过事件通知覆盖，脚本异常时不会空白。
+    foregroundStyle: if isLetter then baseStyles else std.get(params, 'foregroundStyle', params.key + 'ButtonForegroundStyle'),
     [if isLetter then 'uppercasedStateForegroundStyle']: baseStyles,
     [if isLetter then 'notification']: [params.key + 'FlypyHiddenNotification', params.key + 'FlypyInitialNotification', params.key + 'FlypyFinalNotification'],
     hintStyle: params.key + 'ButtonHintStyle', action: std.get(params, 'action', { character: params.key }),
