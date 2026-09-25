@@ -1,2 +1,0 @@
-patch:
-  "engine/processors/@before 0": "lua_processor@*flypy_keycode_state"
